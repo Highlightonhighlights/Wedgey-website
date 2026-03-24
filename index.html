@@ -15,10 +15,8 @@
     background: var(--dark);
     z-index: 9999;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 24px;
     transition: opacity 0.6s ease, visibility 0.6s ease;
   }
 
@@ -27,21 +25,28 @@
     visibility: hidden;
   }
 
-  #splash img {
-    width: 200px;
-    height: 200px;
+  .splash-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .splash-icon img {
+    width: 120px;
+    height: 120px;
     object-fit: contain;
     display: block;
     margin: 0 auto;
   }
 
   #splash .splash-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
-    letter-spacing: 12px;
+    font-family: 'franklin-gothic-atf', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: 14px;
     color: var(--orange);
     text-align: center;
-    width: 100%;
     animation: pulse 1s ease-in-out infinite;
   }
 
@@ -833,8 +838,12 @@
 
 <!-- SPLASH SCREEN -->
 <div id="splash">
-  <img src="https://www.dropbox.com/scl/fi/vf4jlfn4faxu2djvqffbo/wedgey-loading-gif_2.gif?rlkey=otgc4haad1s034rasfew79mk1&st=6dmufi21&raw=1" alt="Wedgey" />
-  <div class="splash-logo">WEDGEY</div>
+  <div class="splash-inner">
+    <div class="splash-icon">
+      <img src="https://www.dropbox.com/scl/fi/vf4jlfn4faxu2djvqffbo/wedgey-loading-gif_2.gif?rlkey=otgc4haad1s034rasfew79mk1&st=6dmufi21&raw=1" alt="Wedgey" />
+    </div>
+    <div class="splash-logo">WEDGEY</div>
+  </div>
 </div>
 
 <!-- NAV -->
