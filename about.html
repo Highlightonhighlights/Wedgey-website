@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WEDGEY — About</title>
+<link rel="icon" type="image/gif" href="https://www.dropbox.com/scl/fi/vf4jlfn4faxu2djvqffbo/wedgey-loading-gif_2.gif?rlkey=otgc4haad1s034rasfew79mk1&st=6dmufi21&raw=1">
+<link rel="stylesheet" href="https://use.typekit.net/dxa5xpn.css">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E8714A;
+    --orange-light: #F2A07B;
+    --cream: #F5EFE6;
+    --dark: #0F0F0F;
+    --mid: #1A1A1A;
+    --border: rgba(255,255,255,0.07);
+    --text-muted: #666;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    background: rgba(15,15,15,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .nav-logo {
+    font-family: 'franklin-gothic-atf', sans-serif;
+    font-weight: 900;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--orange);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .nav-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: rgba(245,239,230,0.55);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-link:hover { color: var(--cream); }
+  .nav-link.active { color: var(--cream); }
+
+  .nav-cta {
+    background: var(--orange);
+    color: var(--dark);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 12px 28px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .nav-cta:hover {
+    background: var(--orange-light);
+    transform: translateY(-1px);
+  }
+
+  /* HERO */
+  .about-hero {
+    padding: 180px 48px 100px;
+    max-width: 900px;
+    position: relative;
+  }
+
+  .about-hero::before {
+    content: '';
+    position: absolute;
+    top: 100px; left: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(232,113,74,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.1s;
+  }
+
+  .about-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 9vw, 120px);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .about-title span { color: var(--orange); }
+
+  .about-intro {
+    font-size: 22px;
+    line-height: 1.7;
+    color: rgba(245,239,230,0.75);
+    font-weight: 300;
+    max-width: 680px;
+    border-left: 2px solid var(--orange);
+    padding-left: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.35s;
+  }
+
+  /* CONTENT SECTIONS */
+  .about-content {
+    padding: 0 48px 120px;
+  }
+
+  .content-block {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .content-block.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .content-block-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--orange);
+    text-transform: uppercase;
+    padding-top: 6px;
+  }
+
+  .content-block-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: rgba(232,113,74,0.08);
+    line-height: 1;
+    margin-top: 8px;
+  }
+
+  .content-block-body h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    letter-spacing: 2px;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--cream);
+  }
+
+  .content-block-body p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: rgba(245,239,230,0.65);
+    font-weight: 300;
+    margin-bottom: 16px;
+  }
+
+  .content-block-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* STAT ROW */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin: 80px 0;
+    border-top: 1px solid var(--border);
+    padding-top: 80px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .stat-row.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat-card {
+    background: var(--mid);
+    padding: 40px 36px;
+  }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: var(--orange);
+    line-height: 1;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(245,239,230,0.45);
+    text-transform: uppercase;
+  }
+
+  /* CTA STRIP */
+  .about-cta {
+    background: var(--mid);
+    margin: 0 48px;
+    padding: 64px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 80px;
+  }
+
+  .about-cta-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    letter-spacing: 2px;
+    line-height: 1.1;
+  }
+
+  .about-cta-text span { color: var(--orange); }
+
+  .btn-primary {
+    background: var(--orange);
+    color: var(--dark);
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 18px 40px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.25s;
+    display: inline-block;
+    white-space: nowrap;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+  }
+
+  .btn-primary:hover {
+    background: var(--orange-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(232,113,74,0.35);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 4px;
+    color: var(--orange);
+  }
+
+  .footer-copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-link { display: none; }
+    .nav-cta { padding: 10px 18px; font-size: 11px; }
+    .about-hero { padding: 140px 24px 80px; }
+    .about-content { padding: 0 24px 80px; }
+    .content-block { grid-template-columns: 1fr; gap: 24px; padding: 56px 0; }
+    .content-block-number { display: none; }
+    .stat-row { grid-template-columns: 1fr; margin: 56px 0; padding-top: 56px; }
+    .about-cta { flex-direction: column; margin: 0 24px; padding: 48px 32px; text-align: center; margin-bottom: 60px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo">WEDGEY</a>
+    <img src="https://www.dropbox.com/scl/fi/vf4jlfn4faxu2djvqffbo/wedgey-loading-gif_2.gif?rlkey=otgc4haad1s034rasfew79mk1&st=6dmufi21&raw=1" style="width:40px;height:40px;object-fit:contain;margin-bottom:2px;" alt="icon"/>
+  </div>
+  <div class="nav-links">
+    <a href="about.html" class="nav-link active">About</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <a href="index.html#buy" class="nav-cta">BUY NOW — $29</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="about-hero">
+  <div class="eyebrow">Our Story</div>
+  <h1 class="about-title">BUILT OUT OF<br><span>FRUSTRATION.</span></h1>
+  <p class="about-intro">
+    We were tired of spending hundreds of dollars on swing aids that were complicated, fragile, and frankly — didn't work. So we built something better.
+  </p>
+</div>
+
+<!-- CONTENT -->
+<div class="about-content">
+
+  <div class="content-block">
+    <div>
+      <div class="content-block-label">The Problem</div>
+      <div class="content-block-number">01</div>
+    </div>
+    <div class="content-block-body">
+      <h3>THE INDUSTRY WAS ROBBING BEGINNERS.</h3>
+      <p>Walk into any golf shop and you'll find swing aids priced at $80, $120, even $200. Complicated contraptions with instruction manuals thicker than a rulebook. Products that promise everything and deliver nothing — except a lighter wallet.</p>
+      <p>For a beginner just trying to get better, that's not just overpriced. It's a barrier. Golf is already hard enough without the industry making improvement feel exclusive.</p>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div>
+      <div class="content-block-label">The Insight</div>
+      <div class="content-block-number">02</div>
+    </div>
+    <div class="content-block-body">
+      <h3>THE BEST FEEDBACK IS INSTANT.</h3>
+      <p>The number one thing beginners struggle with is the downward strike — compressing the ball instead of scooping it. Every coach knows it. Every drill targets it. But most training aids make it complicated.</p>
+      <p>We asked a simple question: what if the feedback was so immediate, so physical, that your body just learned it? No video analysis. No guesswork. You either hit through it clean or you don't.</p>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div>
+      <div class="content-block-label">The Solution</div>
+      <div class="content-block-number">03</div>
+    </div>
+    <div class="content-block-body">
+      <h3>A WEDGE. THAT'S IT.</h3>
+      <p>Wedgey is engineered at exactly 8° — the optimal angle for training a proper downward strike. Place it down, swing through it. If you scoop, you'll know. If you compress, you'll feel the difference immediately.</p>
+      <p>No manual. No setup. No excuses. Just the most straightforward swing drill in golf, at a price that doesn't make you think twice about buying it.</p>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-number">8°</div>
+      <div class="stat-label">Optimal strike angle — engineered, not guessed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">$29</div>
+      <div class="stat-label">vs. $80–$200 for comparable aids</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">0</div>
+      <div class="stat-label">Pages of instructions needed</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CTA STRIP -->
+<div class="about-cta">
+  <div class="about-cta-text">READY TO<br><span>STRIKE PURE?</span></div>
+  <a href="index.html#buy" class="btn-primary">GET WEDGEY — $29</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">WEDGEY</div>
+  <div class="footer-copy">© 2025 WEDGEY. MADE FOR GOLFERS WHO KEEP IT SIMPLE.</div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.content-block, .stat-row').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
