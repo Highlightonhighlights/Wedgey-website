@@ -1179,19 +1179,27 @@
   const heroVideo = document.querySelector('.hero-gif-bg');
   if (heroVideo) {
     heroVideo.muted = true;
-    const playPromise = heroVideo.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // Autoplay blocked — retry on first user interaction
-        const resumePlay = () => {
-          heroVideo.play();
-          document.removeEventListener('touchstart', resumePlay);
-          document.removeEventListener('click', resumePlay);
-        };
-        document.addEventListener('touchstart', resumePlay, { once: true });
-        document.addEventListener('click', resumePlay, { once: true });
+
+    const tryPlay = () => {
+      heroVideo.play().catch(() => {
+        // Autoplay blocked — play on first user interaction
+        const onInteract = () => heroVideo.play();
+        document.addEventListener('touchstart', onInteract, { once: true });
+        document.addEventListener('click', onInteract, { once: true });
       });
+    };
+
+    // Wait until video has enough data before calling play()
+    if (heroVideo.readyState >= 2) {
+      tryPlay();
+    } else {
+      heroVideo.addEventListener('canplay', tryPlay, { once: true });
     }
+
+    // Resume if user switches tabs and comes back
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && heroVideo.paused) heroVideo.play();
+    });
   }
 
   // Scroll animations
