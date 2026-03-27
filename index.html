@@ -960,7 +960,7 @@
 
 <!-- HERO -->
 <section class="hero">
-  <video class="hero-gif-bg" autoplay loop muted playsinline>
+  <video class="hero-gif-bg" autoplay loop muted playsinline preload="auto">
   <source src="https://www.dropbox.com/scl/fi/wstb9v277x9ajfjc2uho9/swing_test_1.mp4?rlkey=etdkj82iqyp22ur87yg0ek8g0&st=utf0e1pf&raw=1" type="video/mp4">
 </video>
   <div class="hero-overlay"></div>
@@ -1174,6 +1174,25 @@
       document.getElementById('splash').classList.add('hidden');
     }, 1200);
   });
+
+  // Hero video autoplay on mobile
+  const heroVideo = document.querySelector('.hero-gif-bg');
+  if (heroVideo) {
+    heroVideo.muted = true;
+    const playPromise = heroVideo.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay blocked — retry on first user interaction
+        const resumePlay = () => {
+          heroVideo.play();
+          document.removeEventListener('touchstart', resumePlay);
+          document.removeEventListener('click', resumePlay);
+        };
+        document.addEventListener('touchstart', resumePlay, { once: true });
+        document.addEventListener('click', resumePlay, { once: true });
+      });
+    }
+  }
 
   // Scroll animations
   const observer = new IntersectionObserver((entries) => {
