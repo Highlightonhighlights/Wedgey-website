@@ -19,7 +19,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 
   body {
     background: var(--dark);
@@ -319,17 +319,87 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--cream);
+    transition: all 0.3s ease;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+  }
+
   /* MOBILE */
   @media (max-width: 768px) {
     nav { padding: 16px 20px; }
     .nav-link { display: none; }
-    .nav-cta { padding: 10px 18px; font-size: 11px; }
-    .about-hero { padding: 140px 24px 80px; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
+
+    .mobile-menu {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(15,15,15,0.98);
+      backdrop-filter: blur(12px);
+      padding: 24px;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      transform: translateY(-110%);
+      transition: transform 0.3s ease;
+      z-index: 99;
+    }
+
+    .mobile-menu.open { transform: translateY(0); }
+
+    .mobile-menu a {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: rgba(245,239,230,0.7);
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:last-child {
+      border-bottom: none;
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    .mobile-menu a:hover { color: var(--cream); }
+
+    .about-hero { padding: 120px 24px 64px; }
+    .about-hero::before { display: none; }
+    .about-intro { font-size: 17px; padding-left: 20px; }
     .about-content { padding: 0 24px 80px; }
     .content-block { grid-template-columns: 1fr; gap: 24px; padding: 56px 0; }
     .content-block-number { display: none; }
+    .content-block-body h3 { font-size: 32px; }
     .stat-row { grid-template-columns: 1fr; margin: 56px 0; padding-top: 56px; }
     .about-cta { flex-direction: column; margin: 0 24px; padding: 48px 32px; text-align: center; margin-bottom: 60px; }
+    .btn-primary { width: 100%; text-align: center; }
     footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
   }
 </style>
@@ -347,7 +417,17 @@
     <a href="contact.html" class="nav-link">Contact</a>
     <a href="index.html#buy" class="nav-cta">BUY NOW — $29</a>
   </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" onclick="toggleMenu()">Home</a>
+  <a href="about.html" onclick="toggleMenu()">About</a>
+  <a href="contact.html" onclick="toggleMenu()">Contact</a>
+  <a href="index.html#buy" onclick="toggleMenu()">BUY NOW — $29</a>
+</div>
 
 <!-- HERO -->
 <div class="about-hero">
@@ -428,6 +508,13 @@
 </footer>
 
 <script>
+  function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    const btn = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) e.target.classList.add('visible');
