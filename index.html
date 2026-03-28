@@ -1169,10 +1169,10 @@
     btn.classList.toggle('open');
   }
   // Splash screen
-  window.addEventListener('load', () => {
+  document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       document.getElementById('splash').classList.add('hidden');
-    }, 600);
+    }, 400);
   });
 
   // Hero video autoplay on mobile
